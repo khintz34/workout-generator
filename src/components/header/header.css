@@ -1,0 +1,35 @@
+.header {
+  border-bottom: 1px solid;
+  width: 100vw;
+  max-width: 100vw;
+  height: 10vh;
+  position: fixed;
+  top: 0;
+  padding: 0 2vw;
+}
+
+.vh-font-3 {
+  font-size: 3vh;
+}
+.vh-font-2-5 {
+  font-size: 2.5vh;
+}
+
+.flex-c-c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.keep-right {
+  position: fixed;
+  right: 4vw;
+}
+
+.whiteFont {
+  color: white;
+}
+
+.whiteOutline {
+  border: 1px solid white;
+}
