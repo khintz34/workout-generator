@@ -1,0 +1,12 @@
+.choice-container {
+  width: 100vw;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
+}
+
+.choiceSelect {
+  /* position: absolute; */
+}
