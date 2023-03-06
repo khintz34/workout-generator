@@ -9,7 +9,15 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <Dropdown placeHolder="Select..." options={MuscleGroup} />
+      <h2>Choose Muscle Groups</h2>
+      <Dropdown
+        placeHolder="Select..."
+        options={MuscleGroup}
+        heading="Choose Muscle Groups"
+        isMulti
+        isSearchable
+        onChange={(value) => console.log(value)}
+      />
       {/* <Choice
         title="Choose Muscle Group"
         for="groupChoice"

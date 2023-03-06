@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { faBox } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState, useRef } from "react";
 import "./dropdown.css";
 
 const Icon = () => {
@@ -9,9 +10,32 @@ const Icon = () => {
   );
 };
 
-const Dropdown = ({ placeHolder, options }) => {
+const CloseIcon = () => {
+  return (
+    <svg height="20" width="20" viewBox="0 0 20 20">
+      <path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"></path>
+    </svg>
+  );
+};
+
+const Dropdown = ({
+  placeHolder,
+  options,
+  isMulti,
+  isSearchable,
+  onChange,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(isMulti ? [] : null);
+  const [searchValue, setSearchValue] = useState("");
+  const searchRef = useRef();
+  useEffect(() => {
+    setSearchValue("");
+    if (showMenu && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [showMenu]);
+  const [muscle, setMuscle] = useState(null);
 
   useEffect(() => {
     const handler = () => setShowMenu(false);
@@ -22,36 +46,118 @@ const Dropdown = ({ placeHolder, options }) => {
     };
   });
 
+  const onSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const getOptions = () => {
+    if (!searchValue) {
+      return options;
+    }
+    return options.filter(
+      (option) =>
+        option.label.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
+    );
+  };
+
   const handleInputClick = (e) => {
     e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
   const getDisplay = () => {
-    if (selectedValue) {
-      return selectedValue.label;
+    if (!selectedValue || selectedValue.length === 0) {
+      return placeHolder;
     }
-    return placeHolder;
+    if (isMulti) {
+      return (
+        <div className="dropdown-tags">
+          {selectedValue.map((option) => (
+            <div key={option.value} className="dropdown-tag-item">
+              {option.label}
+              <span
+                onClick={(e) => onTagRemove(e, option)}
+                className="dropdown-tag-close"
+              >
+                <CloseIcon />
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+  };
+
+  const removeOption = (option) => {
+    return selectedValue.filter((o) => o.value !== option.value);
+  };
+  const onTagRemove = (e, option) => {
+    const newValue = removeOption(option);
+    onChange(newValue);
+    e.stopPropagation();
+    setSelectedValue(removeOption(option));
   };
 
   const onItemClick = (option) => {
-    setSelectedValue(option);
+    let newValue;
+    if (isMulti) {
+      if (selectedValue.findIndex((o) => o.value === option.value) >= 0) {
+        newValue = removeOption(option);
+      } else {
+        newValue = [...selectedValue, option];
+      }
+    } else {
+      newValue = option;
+    }
+    setSelectedValue(newValue);
+    onChange(newValue);
+    setMuscle(option.value);
+    fetchData(option.value);
   };
 
   const isSelected = (option) => {
+    if (isMulti) {
+      return selectedValue.filter((o) => o.value === option.value).length > 0;
+    }
     if (!selectedValue) {
       return false;
     }
-
     return selectedValue.value === option.value;
   };
 
+  const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
+
+  async function fetchData(option) {
+    const url = `https://api.api-ninjas.com/v1/exercises?muscle=${option}`;
+    fetch(url, {
+      method: "GET",
+      withCredentials: true,
+      headers: { "X-Api-Key": apiKey },
+    })
+      .then((resp) => resp.json())
+      .then(function (data) {
+        console.log(data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
-    <div className="dropdown-container">
+    <div className="dropdown-container" id="muscleDropdown">
       <div className="dropdown-input" onClick={handleInputClick}>
         {showMenu && (
           <div className="dropdown-menu">
-            {options.map((option) => {
+            {isSearchable && (
+              <div className="search-box">
+                <input
+                  onChange={onSearch}
+                  value={searchValue}
+                  ref={searchRef}
+                />
+              </div>
+            )}
+            {getOptions().map((option) => {
               return (
                 <div
                   onClick={() => {
