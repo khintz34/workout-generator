@@ -28,7 +28,9 @@ const Dropdown = ({
   const [showMenu, setShowMenu] = useState(false);
   const [selectedValue, setSelectedValue] = useState(isMulti ? [] : null);
   const [searchValue, setSearchValue] = useState("");
+  const inputRef = useRef();
   const searchRef = useRef();
+
   useEffect(() => {
     setSearchValue("");
     if (showMenu && searchRef.current) {
@@ -38,7 +40,11 @@ const Dropdown = ({
   const [muscle, setMuscle] = useState(null);
 
   useEffect(() => {
-    const handler = () => setShowMenu(false);
+    const handler = (e) => {
+      if (inputRef.current && !inputRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
 
     window.addEventListener("click", handler);
     return () => {
@@ -61,7 +67,6 @@ const Dropdown = ({
   };
 
   const handleInputClick = (e) => {
-    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -86,11 +91,27 @@ const Dropdown = ({
         </div>
       );
     }
+    return (
+      <div className="dropdown-tags">
+        <div className="dropdown-tag-item">
+          {selectedValue.label}
+          <span
+            onClick={(e) => onTagRemove(e, selectedValue.label)}
+            className="dropdown-tag-close"
+          >
+            <CloseIcon />
+          </span>
+        </div>
+      </div>
+    );
   };
 
   const removeOption = (option) => {
-    return selectedValue.filter((o) => o.value !== option.value);
+    if (isMulti) {
+      return selectedValue.filter((o) => o.value !== option.value);
+    }
   };
+
   const onTagRemove = (e, option) => {
     const newValue = removeOption(option);
     onChange(newValue);
@@ -112,7 +133,6 @@ const Dropdown = ({
     setSelectedValue(newValue);
     onChange(newValue);
     setMuscle(option.value);
-    fetchData(option.value);
   };
 
   const isSelected = (option) => {
@@ -125,27 +145,9 @@ const Dropdown = ({
     return selectedValue.value === option.value;
   };
 
-  const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
-
-  async function fetchData(option) {
-    const url = `https://api.api-ninjas.com/v1/exercises?muscle=${option}`;
-    fetch(url, {
-      method: "GET",
-      withCredentials: true,
-      headers: { "X-Api-Key": apiKey },
-    })
-      .then((resp) => resp.json())
-      .then(function (data) {
-        console.log(data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
   return (
     <div className="dropdown-container" id="muscleDropdown">
-      <div className="dropdown-input" onClick={handleInputClick}>
+      <div className="dropdown-input" ref={inputRef} onClick={handleInputClick}>
         {showMenu && (
           <div className="dropdown-menu">
             {isSearchable && (
