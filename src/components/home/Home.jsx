@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MuscleGroup, WorkoutType } from "../../assets/choices";
 import Choice from "../choices/Choice";
 import Dropdown from "../dropdown/Dropdown";
@@ -6,19 +6,46 @@ import Header from "../header/Header";
 import "./home.css";
 
 const Home = () => {
+  const [muscleStatus, setMuscleStatus] = useState(false);
+  const [typeStatus, setTypeStatus] = useState(false);
   const [selectedMuscles, setSelectedMuscles] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
+  const [urlEnding, setUrlEnding] = useState(null);
 
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
-  //! need to work on the option.value since its coming in as an array. need to .map and
-  //! run multiple times
-
   //! Will also need to see if workout type is selected and then choose which one to get
 
-  async function fetchData(option) {
-    console.log(option);
-    const url = `https://api.api-ninjas.com/v1/exercises?muscle=${option[0].value}`;
+  // getting undefined
+
+  function callFetch() {
+    console.log(selectedMuscles, selectedType);
+    if (selectedMuscles !== null || selectedMuscles !== undefined) {
+      if (selectedType !== null || selectedType !== undefined) {
+        selectedMuscles.map((option, { selectedType }) =>
+          fetchData(option.value, selectedType.value)
+        );
+      } else {
+        selectedMuscles.map((option, { selectedType }) =>
+          fetchData(option.value, null)
+        );
+      }
+    } else {
+      fetchData(null, selectedType.value);
+    }
+  }
+
+  async function fetchData(muscle, type) {
+    let url;
+    if (selectedMuscles !== null || selectedMuscles !== undefined) {
+      if (selectedType !== null || selectedType !== undefined) {
+        url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
+      } else {
+        url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`;
+      }
+    } else {
+      url = `https://api.api-ninjas.com/v1/exercises?type=${type}`;
+    }
     fetch(url, {
       method: "GET",
       withCredentials: true,
@@ -43,8 +70,7 @@ const Home = () => {
         isMulti
         isSearchable
         onChange={(value) => {
-          console.log(value);
-          fetchData(value);
+          setSelectedMuscles(value);
         }}
       />
       <h2>Choose Workout Type</h2>
@@ -53,9 +79,11 @@ const Home = () => {
         options={WorkoutType}
         heading="Choose Workout Type"
         isSearchable
-        onChange={(value) => fetchData(value)}
+        onChange={(value) => setSelectedType(value)}
       />
-      <button className="buttonGenerate">Generate Workout</button>
+      <button className="buttonGenerate" onClick={callFetch}>
+        Generate Workout
+      </button>
     </div>
   );
 };
