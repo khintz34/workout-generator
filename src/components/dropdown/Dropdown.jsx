@@ -146,7 +146,7 @@ const Dropdown = ({
   };
 
   return (
-    <div className="dropdown-container" id="muscleDropdown">
+    <div className="dropdown-container">
       <div className="dropdown-input" ref={inputRef} onClick={handleInputClick}>
         {showMenu && (
           <div className="dropdown-menu">

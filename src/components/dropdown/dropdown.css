@@ -3,8 +3,8 @@
   border: 1px solid #ccc;
   position: relative;
   border-radius: 5px;
-  width: 50vw;
-  margin-top: 5vh;
+  width: 70vw;
+  /* margin-top: 5vh; */
 }
 
 .dropdown-input {

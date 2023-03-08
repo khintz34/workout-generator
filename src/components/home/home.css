@@ -1,3 +1,10 @@
 .buttonGenerate {
   margin-top: 5vh;
 }
+
+.question-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

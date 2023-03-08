@@ -1,0 +1,11 @@
+.workoutList-main {
+  margin-top: 2vh;
+  font-size: 2.5vh;
+}
+
+.workout-list {
+  list-style-type: none;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+}
