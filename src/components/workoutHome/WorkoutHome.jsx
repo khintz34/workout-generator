@@ -14,76 +14,53 @@ const WorkoutHome = () => {
   return (
     <div>
       <Header />
-      {workoutList !== [] ? (
-        <div className="workoutList-main">
-          {/* {apiFlag === "muscle" ? (
-            <h2>{workoutList[0].muscle}</h2>
-          ) : apiFlag === "type" ? (
-            <h2>{workoutList[0].type}</h2>
-          ) : (
-            <h2>{`${workoutList[0].type}: ${workoutList[0].muscle}`}</h2>
-          )}
-          <ul className="workout-list">
-            {workoutList.map((value, index) => {
-              return (
-                <li className="workoutList-li" key={`${value.name}-${index}`}>
-                  {value.name}
-                </li>
-              );
-            })}
-          </ul> */}
-          {workoutList.map((array) => {
-            return (
-              <div>
-                {/* {apiFlag === "muscle" ? (
-                  <h2>{workoutList[0].muscle}</h2>
-                ) : apiFlag === "type" ? (
-                  <h2>{workoutList[0].type}</h2>
-                ) : (
-                  <h2>{`${workoutList[0].type}: ${workoutList[0].muscle}`}</h2>
-                )} */}
-                ----Header----
-                {array.json1.map((value) => {
-                  return <p>{value.name}</p>;
-                })}
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div>bad</div>
-      )}
+      <div className="workoutList-main">
+        {apiFlag === "muscle" ? (
+          <h2>{workoutList[0].json1[0].muscle}</h2>
+        ) : apiFlag === "type" ? (
+          <h2>{workoutList[0].json1[0].type}</h2>
+        ) : (
+          <h2>{`${workoutList[0].json1[0].type}: ${workoutList[0].json1[0].muscle}`}</h2>
+        )}
+        {workoutList.map((array, index) => {
+          return (
+            <ul className="workout-list" key={`ul-workout-home-${index}`}>
+              {array.json1.map((value) => {
+                return (
+                  <li className="workoutList-li" key={`${value.name}-${index}`}>
+                    {value.name}
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
 export default WorkoutHome;
 
-//! This works for one array at a time only
-{
-  /* <div>
-      <Header />
-      {workoutList ? (
-        <div className="workoutList-main">
-          {apiFlag === "muscle" ? (
-            <h2>{workoutList[0].muscle}</h2>
-          ) : apiFlag === "type" ? (
-            <h2>{workoutList[0].type}</h2>
-          ) : (
-            <h2>{`${workoutList[0].type}: ${workoutList[0].muscle}`}</h2>
-          )}
-          <ul className="workout-list">
-            {workoutList.map((value, index) => {
-              return (
-                <li className="workoutList-li" key={`${value.name}-${index}`}>
-                  {value.name}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ) : (
-        <div>bad</div>
-      )}
-    </div> */
-}
+//! This works for two workout array at a time only
+// {workoutList.map((array) => {
+//     return (
+//       <div>
+//         {/* {apiFlag === "muscle" ? (
+//           <h2>{workoutList[0].muscle}</h2>
+//         ) : apiFlag === "type" ? (
+//           <h2>{workoutList[0].type}</h2>
+//         ) : (
+//           <h2>{`${workoutList[0].type}: ${workoutList[0].muscle}`}</h2>
+//         )} */}
+//         ----Header
+//         {array.json1.map((value) => {
+//           return <p>{value.name}</p>;
+//         })}
+//       </div>
+//     );
+//   })}
+// </div>
+// ) : (
+// <div>bad</div>
+// )}

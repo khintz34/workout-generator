@@ -19,35 +19,45 @@ const Home = () => {
 
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
+  //! Both is not working. Returning undefined before JSON is done processing.
+
+  //! Need to make sure when you get rid of all options that it resets.
+
   async function callFetch() {
     console.log("selected Muscles: ", selectedMuscles);
     console.log("selected Type: ", selectedType);
     if (selectedMuscles !== null && selectedMuscles !== undefined) {
       if (selectedType !== null && selectedType !== undefined) {
         console.log("workout and type");
-        selectedMuscles.map((option) => {
-          console.log(selectedType);
+        const promises = selectedMuscles.map((option) => {
           fetchData(option.value, selectedType.value);
         });
-        console.log(array, "new Araay here");
+        const results = await Promise.all(promises);
+
+        console.log("results", results);
+
+        setWorkoutList(results);
       } else {
         console.log("just workout");
-        // selectedMuscles.map((option, { selectedType }) =>
-        //   fetchData(option.value, null)
-        // );
         const promises = selectedMuscles.map((option) =>
           fetchData(option.value, null)
         );
 
         const results = await Promise.all(promises);
 
-        console.log(results);
+        console.log("results", results);
 
         setWorkoutList(results);
       }
     } else {
       console.log("just type");
-      fetchData(null, selectedType.value);
+      const promises = fetchData(null, selectedType.value);
+
+      const results = await Promise.resolve(promises);
+
+      console.log("results", results);
+
+      setWorkoutList([results]);
     }
   }
 
@@ -58,6 +68,7 @@ const Home = () => {
       if (selectedType !== null && selectedType !== undefined) {
         url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
         setApiFlag("both");
+        console.log("both");
       } else {
         url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`;
         setApiFlag("muscle");
@@ -75,7 +86,7 @@ const Home = () => {
 
     let json1 = await response.json();
 
-    setWorkoutList(json1);
+    console.log("json1", json1);
 
     return { json1 };
 

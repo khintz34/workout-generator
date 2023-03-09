@@ -2,9 +2,12 @@
   margin-top: 5vh;
 }
 
+.home-container {
+  width: 100vw;
+}
+
 .question-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
