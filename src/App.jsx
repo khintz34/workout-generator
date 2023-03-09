@@ -3,21 +3,39 @@ import Home from "./components/home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WorkoutHome from "./components/workoutHome/WorkoutHome";
 import { useState } from "react";
-import { ApiFlag, WorkoutListContext } from "./contexts/workoutList";
+import {
+  ApiFlag,
+  CurrentWorkoutContext,
+  WorkoutListContext,
+} from "./contexts/workoutList";
+import WorkoutDetail from "./components/workoutDetail/WorkoutDetail";
 
 function App() {
   const [workoutList, setWorkoutList] = useState([]);
   const [apiFlag, setApiFlag] = useState(null);
+  const [currentWorkout, setCurrentWorkout] = useState("");
 
   return (
     <div className="App">
       <BrowserRouter>
         <WorkoutListContext.Provider value={{ workoutList, setWorkoutList }}>
           <ApiFlag.Provider value={{ apiFlag, setApiFlag }}>
-            <Routes>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/workout" element={<WorkoutHome />}></Route>
-            </Routes>
+            <CurrentWorkoutContext.Provider
+              value={{ currentWorkout, setCurrentWorkout }}
+            >
+              <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route
+                  path="/workout"
+                  element={<WorkoutHome />}
+                  name={currentWorkout}
+                ></Route>
+                <Route
+                  path="/workoutDetail/:workout"
+                  element={<WorkoutDetail />}
+                ></Route>
+              </Routes>
+            </CurrentWorkoutContext.Provider>
           </ApiFlag.Provider>
         </WorkoutListContext.Provider>
       </BrowserRouter>

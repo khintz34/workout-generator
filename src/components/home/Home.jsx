@@ -29,6 +29,8 @@ const Home = () => {
     if (selectedMuscles !== null && selectedMuscles !== undefined) {
       if (selectedType !== null && selectedType !== undefined) {
         console.log("workout and type");
+        console.log(selectedMuscles);
+        console.log(selectedType);
         const promises = selectedMuscles.map((option) => {
           fetchData(option.value, selectedType.value);
         });
