@@ -19,8 +19,7 @@ const Home = () => {
 
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
-  function callFetch() {
-    const counter = 0;
+  async function callFetch() {
     console.log("selected Muscles: ", selectedMuscles);
     console.log("selected Type: ", selectedType);
     if (selectedMuscles !== null && selectedMuscles !== undefined) {
@@ -33,9 +32,18 @@ const Home = () => {
         console.log(array, "new Araay here");
       } else {
         console.log("just workout");
-        selectedMuscles.map((option, { selectedType }) =>
+        // selectedMuscles.map((option, { selectedType }) =>
+        //   fetchData(option.value, null)
+        // );
+        const promises = selectedMuscles.map((option) =>
           fetchData(option.value, null)
         );
+
+        const results = await Promise.all(promises);
+
+        console.log(results);
+
+        setWorkoutList(results);
       }
     } else {
       console.log("just type");
@@ -47,7 +55,6 @@ const Home = () => {
     console.log("fetching data");
     let url;
     if (selectedMuscles !== null && selectedMuscles !== undefined) {
-      console.log("length", selectedMuscles.length);
       if (selectedType !== null && selectedType !== undefined) {
         url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
         setApiFlag("both");
@@ -59,25 +66,38 @@ const Home = () => {
       url = `https://api.api-ninjas.com/v1/exercises?type=${type}`;
       setApiFlag("type");
     }
-    fetch(url, {
+
+    let response = await fetch(url, {
       method: "GET",
       withCredentials: true,
       headers: { "X-Api-Key": apiKey },
-    })
-      .then((resp) => resp.json())
-      .then(function (data) {
-        // console.log(data);
-        array.push(data);
-        console.log("array", array);
+    });
 
-        setWorkoutList(data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    let json1 = await response.json();
+
+    setWorkoutList(json1);
+
+    return { json1 };
+
+    //! add try catch
+
+    // .then((resp) => {
+    //   return resp.json();
+    // })
+    // .then(function (data) {
+    //   array.push(data);
+    //   console.log("array", array);
+    //   console.log(data);
+    //   setWorkoutList(data);
+    //   return [data];
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   }
+
   return (
-    <div>
+    <div className="home-container">
       <Header />
       <div className="question-container">
         <h2>Choose Muscle Groups</h2>
@@ -102,10 +122,13 @@ const Home = () => {
           onChange={(value) => setSelectedType(value)}
         />
       </div>
+      {/* <Link to="/workout"> */}
+      <button className="buttonGenerate" onClick={callFetch}>
+        Generate Workout
+      </button>
+      {/* </Link> */}
       <Link to="/workout">
-        <button className="buttonGenerate" onClick={callFetch}>
-          Generate Workout
-        </button>
+        <button>Go TO</button>
       </Link>
     </div>
   );
