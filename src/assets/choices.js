@@ -10,7 +10,7 @@ export const MuscleGroup = [
   { value: "hamstrings", label: "Hamstrings" },
   { value: "lats", label: "Lats" },
   { value: "lower_back", label: "Lower Back" },
-  { value: "middle_back", label: "Middle_back" },
+  { value: "middle_back", label: "Middle Back" },
   { value: "neck", label: "Neck" },
   { value: "quadriceps", label: "Quadriceps" },
   { value: "traps", label: "Traps" },

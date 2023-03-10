@@ -12,33 +12,41 @@ const WorkoutDetail = (props) => {
 
   console.log(value);
 
+  const capAll = (string) => {
+    return string
+      .split("_")
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join("_")
+      .replace(/_/g, " ");
+  };
+
   return (
     <div>
       <Header />
       <div className="workoutList-detail">
         <h2>
           <span className="detail-span">Exercise: </span>
-          {value.name}
+          {capAll(value.name)}
         </h2>
         <p className="detail-p">
           <span className="detail-span">Difficulty: </span>
-          {value.difficulty}
+          {capAll(value.difficulty)}
         </p>
         <p className="detail-p">
           <span className="detail-span">Type: </span>
-          {value.type}
+          {capAll(value.type)}
         </p>
         <p className="detail-p">
           <span className="detail-span">Muscle: </span>
-          {value.muscle}
+          {capAll(value.muscle)}
         </p>
         <p className="detail-p">
           <span className="detail-span">Equipment Needed: </span>{" "}
-          {value.equipment}
+          {capAll(value.equipment)}
         </p>
         <p className="detail-p">
           <span className="detail-span">Instructions: </span>
-          {value.instructions}
+          {capAll(value.instructions)}
         </p>
       </div>
     </div>

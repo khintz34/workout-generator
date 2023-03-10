@@ -15,10 +15,19 @@ const WorkoutHome = () => {
   const { currentWorkout, setCurrentWorkout } = useContext(
     CurrentWorkoutContext
   );
+  const [newList, setNewList] = useState([]);
 
   useEffect(() => {
     console.log("workoutList", workoutList);
   }, [workoutList]);
+
+  const capAll = (string) => {
+    return string
+      .split("_")
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join("_")
+      .replace(/_/g, " ");
+  };
 
   return (
     <div>
@@ -29,37 +38,62 @@ const WorkoutHome = () => {
           let num = 0;
           return (
             <ul className="workout-list" key={`ul-workout-home-${index}`}>
-              <h2>
+              <div>
                 {apiFlag === "muscle" ? (
-                  <h3>{workoutList[index].json1[index].muscle}</h3>
+                  <h3>{capAll(workoutList[index].json1[index].muscle)}</h3>
                 ) : apiFlag === "type" ? (
-                  <h3>{workoutList[index].json1[index].type}</h3>
+                  <h3>{capAll(workoutList[index][0].type)}</h3>
                 ) : (
                   <h3>{`${workoutList[index].json1[index].type}: ${workoutList[index].json1[index].muscle}`}</h3>
                 )}
-              </h2>
-              {array.json1.map((value) => {
-                num++;
-                if (num > 3) {
-                  return;
-                }
-                return (
-                  <Link
-                    to={`/workoutDetail/${value.name}`}
-                    state={{ value: value }}
-                    onClick={() => {
-                      setCurrentWorkout(value);
-                    }}
-                  >
-                    <li
-                      className="workoutList-li"
-                      key={`${value.name}-${index}`}
-                    >
-                      {value.name}
-                    </li>
-                  </Link>
-                );
-              })}
+              </div>
+              {apiFlag === "muscle" || apiFlag === "both"
+                ? array.json1.map((value) => {
+                    num++;
+                    if (num > 3) {
+                      return;
+                    }
+                    return (
+                      <Link
+                        key={`${value.name}-${index}-Link`}
+                        to={`/workoutDetail/${value.name}`}
+                        state={{ value: value }}
+                        onClick={() => {
+                          setCurrentWorkout(value);
+                        }}
+                      >
+                        <li
+                          className="workoutList-li"
+                          key={`${value.name}-${index}`}
+                        >
+                          {value.name}
+                        </li>
+                      </Link>
+                    );
+                  })
+                : array.map((value) => {
+                    num++;
+                    if (num > 3) {
+                      return;
+                    }
+                    return (
+                      <Link
+                        key={`${value.name}-${index}-Link`}
+                        to={`/workoutDetail/${value.name}`}
+                        state={{ value: value }}
+                        onClick={() => {
+                          setCurrentWorkout(value);
+                        }}
+                      >
+                        <li
+                          className="workoutList-li"
+                          key={`${value.name}-${index}`}
+                        >
+                          {value.name}
+                        </li>
+                      </Link>
+                    );
+                  })}
             </ul>
           );
         })}

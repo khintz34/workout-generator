@@ -36,6 +36,12 @@ const Home = () => {
         });
         const results = await Promise.all(promises);
 
+        results.map((array) => {
+          let newArray = array.json1;
+          const randomList = shuffleArray(newArray);
+          console.log("random", randomList);
+        });
+
         console.log("results", results);
 
         setWorkoutList(results);
@@ -47,6 +53,12 @@ const Home = () => {
 
         const results = await Promise.all(promises);
 
+        results.map((array) => {
+          let newArray = array.json1;
+          const randomList = shuffleArray(newArray);
+          console.log("random", randomList);
+        });
+
         console.log("results", results);
 
         setWorkoutList(results);
@@ -55,7 +67,15 @@ const Home = () => {
       console.log("just type");
       const promises = fetchData(null, selectedType.value);
 
-      const results = await Promise.resolve(promises);
+      let results = await Promise.resolve(promises);
+
+      // results.map((array) => {
+      //   let newArray = array.json1;
+      //   const randomList = shuffleArray(newArray);
+      //   console.log("random", randomList);
+      // });
+
+      results = shuffleArray(results.json1);
 
       console.log("results", results);
 
@@ -107,6 +127,29 @@ const Home = () => {
     // .catch(function (error) {
     //   console.log(error);
     // });
+  }
+
+  function shuffleArray(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    //  &&
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    console.log("shuffle:", array);
+
+    return array;
   }
 
   return (
