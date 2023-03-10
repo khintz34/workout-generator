@@ -16,12 +16,30 @@ const WorkoutDetail = (props) => {
     <div>
       <Header />
       <div className="workoutList-detail">
-        <h2>Exercise: {value.name}</h2>
-        <h2>Difficulty: {value.difficulty}</h2>
-        <h2>Type: {value.type}</h2>
-        <h2>Muscle: {value.muscle}</h2>
-        <h2>Equipment Needed: {value.equipment}</h2>
-        <h2>Instructions: {value.instructions}</h2>
+        <h2>
+          <span className="detail-span">Exercise: </span>
+          {value.name}
+        </h2>
+        <p className="detail-p">
+          <span className="detail-span">Difficulty: </span>
+          {value.difficulty}
+        </p>
+        <p className="detail-p">
+          <span className="detail-span">Type: </span>
+          {value.type}
+        </p>
+        <p className="detail-p">
+          <span className="detail-span">Muscle: </span>
+          {value.muscle}
+        </p>
+        <p className="detail-p">
+          <span className="detail-span">Equipment Needed: </span>{" "}
+          {value.equipment}
+        </p>
+        <p className="detail-p">
+          <span className="detail-span">Instructions: </span>
+          {value.instructions}
+        </p>
       </div>
     </div>
   );

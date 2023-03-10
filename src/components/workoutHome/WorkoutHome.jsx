@@ -26,6 +26,7 @@ const WorkoutHome = () => {
       <div className="workoutList-main">
         <h2>Your Workout</h2>
         {workoutList.map((array, index) => {
+          let num = 0;
           return (
             <ul className="workout-list" key={`ul-workout-home-${index}`}>
               <h2>
@@ -38,6 +39,10 @@ const WorkoutHome = () => {
                 )}
               </h2>
               {array.json1.map((value) => {
+                num++;
+                if (num > 3) {
+                  return;
+                }
                 return (
                   <Link
                     to={`/workoutDetail/${value.name}`}

@@ -1,3 +1,18 @@
 .workoutList-detail {
   margin-top: 12vh;
+  text-align: left;
+  padding-left: 2vw;
+}
+
+.detail-p {
+  font-size: 2.7vh;
+}
+
+.detail-span {
+  color: white;
+  font-weight: 900;
+}
+
+h2 > h3 {
+  margin: 2vh 0vh;
 }
