@@ -5,7 +5,11 @@ import Dropdown from "../dropdown/Dropdown";
 import Header from "../header/Header";
 import "./home.css";
 import { Link } from "react-router-dom";
-import { ApiFlag, WorkoutListContext } from "../../contexts/workoutList";
+import {
+  ApiFlag,
+  ExerciseNumberContext,
+  WorkoutListContext,
+} from "../../contexts/workoutList";
 
 const Home = () => {
   const [muscleStatus, setMuscleStatus] = useState(false);
@@ -16,6 +20,9 @@ const Home = () => {
   const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
   const { apiFlag, setApiFlag } = useContext(ApiFlag);
   const [array, setArray] = useState([]);
+  const { exerciseNumber, setExerciseNumber } = useContext(
+    ExerciseNumberContext
+  );
 
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
@@ -31,15 +38,18 @@ const Home = () => {
         console.log("workout and type");
         console.log(selectedMuscles);
         console.log(selectedType);
+
         const promises = selectedMuscles.map((option) => {
           fetchData(option.value, selectedType.value);
         });
+
         const results = await Promise.all(promises);
 
         results.map((array) => {
-          let newArray = array.json1;
-          const randomList = shuffleArray(newArray);
-          console.log("random", randomList);
+          // let newArray = array.json1;
+          // const randomList = shuffleArray(newArray);
+          // console.log("random", randomList);
+          console.log(array);
         });
 
         console.log("results", results);
@@ -56,7 +66,7 @@ const Home = () => {
         results.map((array) => {
           let newArray = array.json1;
           const randomList = shuffleArray(newArray);
-          console.log("random", randomList);
+          // console.log("random", randomList);
         });
 
         console.log("results", results);
@@ -68,12 +78,6 @@ const Home = () => {
       const promises = fetchData(null, selectedType.value);
 
       let results = await Promise.resolve(promises);
-
-      // results.map((array) => {
-      //   let newArray = array.json1;
-      //   const randomList = shuffleArray(newArray);
-      //   console.log("random", randomList);
-      // });
 
       results = shuffleArray(results.json1);
 
@@ -113,20 +117,6 @@ const Home = () => {
     return { json1 };
 
     //! add try catch
-
-    // .then((resp) => {
-    //   return resp.json();
-    // })
-    // .then(function (data) {
-    //   array.push(data);
-    //   console.log("array", array);
-    //   console.log(data);
-    //   setWorkoutList(data);
-    //   return [data];
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   }
 
   function shuffleArray(array) {
@@ -147,7 +137,7 @@ const Home = () => {
       ];
     }
 
-    console.log("shuffle:", array);
+    // console.log("shuffle:", array);
 
     return array;
   }
@@ -155,37 +145,53 @@ const Home = () => {
   return (
     <div className="home-container">
       <Header />
-      <div className="question-container">
-        <h2>Choose Muscle Groups</h2>
-        <Dropdown
-          placeHolder="Select..."
-          options={MuscleGroup}
-          heading="Choose Muscle Groups"
-          isMulti
-          isSearchable
-          onChange={(value) => {
-            setSelectedMuscles(value);
-          }}
-        />
+      <div className="home-main">
+        <div className="question-container">
+          <h2>Choose Muscle Groups</h2>
+          <Dropdown
+            placeHolder="Select..."
+            options={MuscleGroup}
+            heading="Choose Muscle Groups"
+            isMulti
+            isSearchable
+            onChange={(value) => {
+              setSelectedMuscles(value);
+            }}
+          />
+        </div>
+        <div className="question-container">
+          <h2>Choose Workout Type</h2>
+          <Dropdown
+            placeHolder="Select..."
+            options={WorkoutType}
+            heading="Choose Workout Type"
+            isSearchable
+            onChange={(value) => setSelectedType(value)}
+          />
+        </div>
+        <div className="question-container">
+          <h2>Number of Exercises per Muscle?</h2>
+          <input
+            type="number"
+            value={exerciseNumber}
+            max={10}
+            min={1}
+            className="exerciseNumberInput"
+            step={1}
+            placeholder="1-10"
+            onChange={(e) => {
+              const number = Number(e.target.value);
+              setExerciseNumber(number);
+            }}
+          />
+        </div>
+        <button className="buttonGenerate" onClick={callFetch}>
+          Generate Workout
+        </button>
+        <Link to="/workout">
+          <button>Go TO</button>
+        </Link>
       </div>
-      <div className="question-container">
-        <h2>Choose Workout Type</h2>
-        <Dropdown
-          placeHolder="Select..."
-          options={WorkoutType}
-          heading="Choose Workout Type"
-          isSearchable
-          onChange={(value) => setSelectedType(value)}
-        />
-      </div>
-      {/* <Link to="/workout"> */}
-      <button className="buttonGenerate" onClick={callFetch}>
-        Generate Workout
-      </button>
-      {/* </Link> */}
-      <Link to="/workout">
-        <button>Go TO</button>
-      </Link>
     </div>
   );
 };

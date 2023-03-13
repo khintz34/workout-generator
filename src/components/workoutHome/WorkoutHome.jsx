@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   ApiFlag,
   CurrentWorkoutContext,
+  ExerciseNumberContext,
   WorkoutListContext,
 } from "../../contexts/workoutList";
 import Header from "../header/Header";
@@ -15,7 +16,9 @@ const WorkoutHome = () => {
   const { currentWorkout, setCurrentWorkout } = useContext(
     CurrentWorkoutContext
   );
-  const [newList, setNewList] = useState([]);
+  const { exerciseNumber, setExerciseNumber } = useContext(
+    ExerciseNumberContext
+  );
 
   useEffect(() => {
     console.log("workoutList", workoutList);
@@ -50,7 +53,7 @@ const WorkoutHome = () => {
               {apiFlag === "muscle" || apiFlag === "both"
                 ? array.json1.map((value) => {
                     num++;
-                    if (num > 3) {
+                    if (num > exerciseNumber) {
                       return;
                     }
                     return (
@@ -73,7 +76,7 @@ const WorkoutHome = () => {
                   })
                 : array.map((value) => {
                     num++;
-                    if (num > 3) {
+                    if (num > exerciseNumber) {
                       return;
                     }
                     return (

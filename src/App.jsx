@@ -6,6 +6,7 @@ import { useState } from "react";
 import {
   ApiFlag,
   CurrentWorkoutContext,
+  ExerciseNumberContext,
   WorkoutListContext,
 } from "./contexts/workoutList";
 import WorkoutDetail from "./components/workoutDetail/WorkoutDetail";
@@ -14,6 +15,7 @@ function App() {
   const [workoutList, setWorkoutList] = useState([]);
   const [apiFlag, setApiFlag] = useState(null);
   const [currentWorkout, setCurrentWorkout] = useState("");
+  const [exerciseNumber, setExerciseNumber] = useState(3);
 
   return (
     <div className="App">
@@ -23,18 +25,22 @@ function App() {
             <CurrentWorkoutContext.Provider
               value={{ currentWorkout, setCurrentWorkout }}
             >
-              <Routes>
-                <Route path="/" element={<Home />}></Route>
-                <Route
-                  path="/workout"
-                  element={<WorkoutHome />}
-                  name={currentWorkout}
-                ></Route>
-                <Route
-                  path="/workoutDetail/:workout"
-                  element={<WorkoutDetail />}
-                ></Route>
-              </Routes>
+              <ExerciseNumberContext.Provider
+                value={{ exerciseNumber, setExerciseNumber }}
+              >
+                <Routes>
+                  <Route path="/" element={<Home />}></Route>
+                  <Route
+                    path="/workout"
+                    element={<WorkoutHome />}
+                    name={currentWorkout}
+                  ></Route>
+                  <Route
+                    path="/workoutDetail/:workout"
+                    element={<WorkoutDetail />}
+                  ></Route>
+                </Routes>
+              </ExerciseNumberContext.Provider>
             </CurrentWorkoutContext.Provider>
           </ApiFlag.Provider>
         </WorkoutListContext.Provider>

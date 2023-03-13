@@ -10,8 +10,6 @@ const WorkoutDetail = (props) => {
   const location = useLocation();
   const { value } = location.state;
 
-  console.log(value);
-
   const capAll = (string) => {
     return string
       .split("_")
