@@ -10,6 +10,8 @@ import {
   WorkoutListContext,
 } from "./contexts/workoutList";
 import WorkoutDetail from "./components/workoutDetail/WorkoutDetail";
+import About from "./components/about/About";
+import Options from "./components/options/Options";
 
 function App() {
   const [workoutList, setWorkoutList] = useState([]);
@@ -30,6 +32,8 @@ function App() {
               >
                 <Routes>
                   <Route path="/" element={<Home />}></Route>
+                  <Route path="/about" element={<About />}></Route>
+                  <Route path="/options" element={<Options />}></Route>
                   <Route
                     path="/workout"
                     element={<WorkoutHome />}

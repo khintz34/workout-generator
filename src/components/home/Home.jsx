@@ -27,6 +27,7 @@ const Home = () => {
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
   //! Both is not working. Returning undefined before JSON is done processing.
+  // try combining callFetch and Fetch Data
 
   //! Need to make sure when you get rid of all options that it resets.
 
@@ -104,19 +105,47 @@ const Home = () => {
       setApiFlag("type");
     }
 
-    let response = await fetch(url, {
+    const response = await fetch(url, {
       method: "GET",
       withCredentials: true,
       headers: { "X-Api-Key": apiKey },
     });
 
-    let json1 = await response.json();
+    const json1 = await response.json();
 
     console.log("json1", json1);
 
     return { json1 };
 
     //! add try catch
+  }
+
+  async function newFetch(muscle, type) {
+    const url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
+    setApiFlag("both");
+    console.log("both");
+
+    const response = await fetch(url, {
+      method: "GET",
+      withCredentials: true,
+      headers: { "X-Api-Key": apiKey },
+    });
+
+    const json1 = await response.json();
+
+    console.log("json1", json1);
+
+    // json1.map((array) => {
+    //   let newArray = array.json1;
+    //   const randomList = shuffleArray(newArray);
+    //   console.log("random", randomList);
+    // });
+
+    // setWorkoutList([json1]);
+
+    console.log("set Json already");
+
+    return json1;
   }
 
   function shuffleArray(array) {
@@ -151,12 +180,10 @@ const Home = () => {
           <Dropdown
             placeHolder="Select..."
             options={MuscleGroup}
-            heading="Choose Muscle Groups"
-            isMulti
+            heading="Choose MuscleGroup"
             isSearchable
-            onChange={(value) => {
-              setSelectedMuscles(value);
-            }}
+            isMulti
+            onChange={(value) => setSelectedMuscles(value)}
           />
         </div>
         <div className="question-container">
@@ -189,7 +216,7 @@ const Home = () => {
           Generate Workout
         </button>
         <Link to="/workout">
-          <button>Go TO</button>
+          <button>View Workout</button>
         </Link>
       </div>
     </div>

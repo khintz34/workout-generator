@@ -38,6 +38,7 @@ const WorkoutHome = () => {
       <div className="workoutList-main">
         <h2>Your Workout</h2>
         {workoutList.map((array, index) => {
+          console.log(array);
           let num = 0;
           return (
             <ul className="workout-list" key={`ul-workout-home-${index}`}>
@@ -47,10 +48,12 @@ const WorkoutHome = () => {
                 ) : apiFlag === "type" ? (
                   <h3>{capAll(workoutList[index][0].type)}</h3>
                 ) : (
-                  <h3>{`${workoutList[index].json1[index].type}: ${workoutList[index].json1[index].muscle}`}</h3>
+                  //   <h3>{`${workoutList[index].json1[index].type}: ${workoutList[index].json1[index].muscle}`}</h3>
+                  <h3>Test</h3>
                 )}
               </div>
-              {apiFlag === "muscle" || apiFlag === "both"
+              {/* {apiFlag === "muscle" || apiFlag === "both" */}
+              {apiFlag === "muscle"
                 ? array.json1.map((value) => {
                     num++;
                     if (num > exerciseNumber) {
