@@ -40,18 +40,19 @@ const Home = () => {
         console.log(selectedMuscles);
         console.log(selectedType);
 
-        const promises = selectedMuscles.map((option) => {
-          fetchData(option.value, selectedType.value);
+        const promises = selectedMuscles.map(async (option) => {
+          const data = await fetchData(option.value, selectedType.value);
+          return data;
         });
 
         const results = await Promise.all(promises);
 
-        results.map((array) => {
-          // let newArray = array.json1;
-          // const randomList = shuffleArray(newArray);
-          // console.log("random", randomList);
-          console.log(array);
-        });
+        // results.map((array) => {
+        //   // let newArray = array.json1;
+        //   // const randomList = shuffleArray(newArray);
+        //   // console.log("random", randomList);
+        //   console.log(array);
+        // });
 
         console.log("results", results);
 

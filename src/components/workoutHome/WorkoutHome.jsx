@@ -48,12 +48,12 @@ const WorkoutHome = () => {
                 ) : apiFlag === "type" ? (
                   <h3>{capAll(workoutList[index][0].type)}</h3>
                 ) : (
-                  //   <h3>{`${workoutList[index].json1[index].type}: ${workoutList[index].json1[index].muscle}`}</h3>
-                  <h3>Test</h3>
+                  <h3>{`${workoutList[index].json1[0].type}: ${workoutList[index].json1[0].muscle}`}</h3>
+                  //   <h3>Test</h3>
                 )}
               </div>
               {/* {apiFlag === "muscle" || apiFlag === "both" */}
-              {apiFlag === "muscle"
+              {apiFlag === "muscle" || apiFlag === "both"
                 ? array.json1.map((value) => {
                     num++;
                     if (num > exerciseNumber) {

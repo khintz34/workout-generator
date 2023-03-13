@@ -28,11 +28,19 @@ const Header = () => {
         </Link>
       </div>
       <div className="keep-right">
-        <FontAwesomeIcon
-          icon={faBars}
-          className="whiteFont vh-font-2-5"
-          onClick={handleToggle}
-        />
+        {navbarStatus === false ? (
+          <div onClick={handleToggle} id="rightHeaderSmall">
+            <FontAwesomeIcon
+              icon={faBars}
+              className="whiteFont vh-font-2-5"
+              onClick={handleToggle}
+            />
+          </div>
+        ) : (
+          <div onClick={handleToggle} className="xBtnContainer">
+            <div className="iconWidth openBtn xBtn">X</div>
+          </div>
+        )}
       </div>
       <div id="sideNav" className="sideNav">
         <ul
