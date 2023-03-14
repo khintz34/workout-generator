@@ -26,8 +26,9 @@ const Home = () => {
 
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
-  //! Both is not working. Returning undefined before JSON is done processing.
-  // try combining callFetch and Fetch Data
+  useEffect(() => {
+    setExerciseNumber(3);
+  }, []);
 
   //! Need to make sure when you get rid of all options that it resets.
 
