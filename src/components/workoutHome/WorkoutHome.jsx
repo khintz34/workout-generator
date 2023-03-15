@@ -9,6 +9,12 @@ import {
 import Header from "../header/Header";
 import "./WorkoutHome.css";
 import WorkoutDetail from "../workoutDetail/WorkoutDetail";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faRotate,
+  faCircleInfo,
+} from "@fortawesome/free-solid-svg-icons";
 
 const WorkoutHome = () => {
   const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
@@ -93,7 +99,9 @@ const WorkoutHome = () => {
                 ) : apiFlag === "type" ? (
                   <h3>{capAll(workoutList[index][0].type)}</h3>
                 ) : workoutList[index].json1.length !== 0 ? (
-                  <h3>{`${workoutList[index].json1[0].type}: ${workoutList[index].json1[0].muscle}`}</h3>
+                  <h3>{`${capAll(workoutList[index].json1[0].type)}: ${capAll(
+                    workoutList[index].json1[0].muscle
+                  )}`}</h3>
                 ) : (
                   <h3>No Exercises added</h3>
                 )}
@@ -116,6 +124,7 @@ const WorkoutHome = () => {
                             onClick={() => {
                               setCurrentWorkout(value);
                             }}
+                            className="exercise-link"
                           >
                             <li
                               className="workoutList-li"
@@ -124,27 +133,30 @@ const WorkoutHome = () => {
                               {value.name}
                             </li>
                           </Link>
-                          <button>
-                            <Link
-                              to={`/workoutDetail/${value.name}`}
-                              state={{ value: value }}
-                              onClick={() => {
-                                setCurrentWorkout(value);
-                              }}
+                          <div className="exerciseButtonContainer">
+                            <button>
+                              <Link
+                                to={`/workoutDetail/${value.name}`}
+                                state={{ value: value }}
+                                onClick={() => {
+                                  setCurrentWorkout(value);
+                                }}
+                                className="infoBtn"
+                              >
+                                <FontAwesomeIcon icon={faCircleInfo} />
+                              </Link>
+                            </button>
+                            <button
+                              onClick={() => removeExercise(value.name, true)}
                             >
-                              Info
-                            </Link>
-                          </button>
-                          <button
-                            onClick={() => removeExercise(value.name, true)}
-                          >
-                            Change
-                          </button>
-                          <button
-                            onClick={() => removeExercise(value.name, false)}
-                          >
-                            Remove
-                          </button>
+                              <FontAwesomeIcon icon={faRotate} />
+                            </button>
+                            <button
+                              onClick={() => removeExercise(value.name, false)}
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                          </div>
                         </div>
                       );
                     })

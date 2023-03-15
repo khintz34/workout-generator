@@ -53,6 +53,11 @@ const Header = () => {
               Home
             </li>
           </Link>
+          <Link to={"/workout"} className=" whiteFont">
+            <li className="header-btn menuItem" onClick={closeMenu}>
+              My Workout
+            </li>
+          </Link>
           <Link className=" whiteFont" to="/options">
             <li className="header-btn menuItem" onClick={closeMenu}>
               Options{" "}

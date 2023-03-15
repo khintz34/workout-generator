@@ -26,5 +26,24 @@ div > h3::first-letter {
 }
 
 .exercise-list-main {
-  border: 1px solid rebeccapurple;
+  border-top: 5px solid rebeccapurple;
+  text-align: center;
+  padding: 2vh 0vh;
+  margin-bottom: 1vh;
+}
+
+.exercise-link {
+  color: #999;
+  text-align: center;
+}
+
+.exerciseButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-top: 1vh;
+}
+
+.infoBtn {
+  color: white;
 }

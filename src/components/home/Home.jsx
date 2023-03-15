@@ -38,7 +38,11 @@ const Home = () => {
     setWorkoutComplete(false);
     console.log("selected Muscles: ", selectedMuscles);
     console.log("selected Type: ", selectedType);
-    if (selectedMuscles !== null && selectedMuscles !== undefined) {
+    if (
+      selectedMuscles !== null &&
+      selectedMuscles !== undefined &&
+      selectedMuscles.length > 0
+    ) {
       if (selectedType !== null && selectedType !== undefined) {
         console.log("workout and type");
         console.log(selectedMuscles);
@@ -61,7 +65,6 @@ const Home = () => {
         console.log("results", results);
 
         setWorkoutList(results);
-        setWorkoutComplete(true);
       } else {
         console.log("just workout");
         const promises = selectedMuscles.map((option) =>
@@ -79,10 +82,13 @@ const Home = () => {
         console.log("results", results);
 
         setWorkoutList(results);
-        setWorkoutComplete(true);
       }
     } else {
       console.log("just type");
+      if (selectedType === null || selectedType === undefined) {
+        console.log("ERROR NO DATA");
+        return;
+      }
       const promises = fetchData(null, selectedType.value);
 
       let results = await Promise.resolve(promises);
@@ -92,14 +98,17 @@ const Home = () => {
       console.log("results", results);
 
       setWorkoutList([results]);
-      setWorkoutComplete(true);
     }
   }
 
   async function fetchData(muscle, type) {
     console.log("fetching data");
     let url;
-    if (selectedMuscles !== null && selectedMuscles !== undefined) {
+    if (
+      selectedMuscles !== null &&
+      selectedMuscles !== undefined &&
+      selectedMuscles.length > 0
+    ) {
       if (selectedType !== null && selectedType !== undefined) {
         url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
         setApiFlag("both");
@@ -122,6 +131,8 @@ const Home = () => {
     const json1 = await response.json();
 
     console.log("json1", json1);
+
+    setWorkoutComplete(true);
 
     return { json1 };
 
@@ -149,8 +160,9 @@ const Home = () => {
     <div className="home-container">
       <Header />
       <div className="home-main">
+        <p>Choose Muscle Group(s) and/or Workout Type</p>
         <div className="question-container">
-          <h2>Choose Muscle Groups</h2>
+          <h2>Choose Muscle Group(s)</h2>
           <Dropdown
             placeHolder="Select..."
             options={MuscleGroup}

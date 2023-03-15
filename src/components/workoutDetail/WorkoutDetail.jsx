@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ApiFlag, WorkoutListContext } from "../../contexts/workoutList";
 import Header from "../header/Header";
 import "./WorkoutDetail.css";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const WorkoutDetail = (props) => {
   const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
@@ -46,6 +46,9 @@ const WorkoutDetail = (props) => {
           <span className="detail-span">Instructions: </span>
           {capAll(value.instructions)}
         </p>
+        <Link to="/workout" className="backBtn">
+          <button className="backBtn">Back</button>
+        </Link>
       </div>
     </div>
   );
