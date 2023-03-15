@@ -1,5 +1,6 @@
 .buttonGenerate {
   margin-top: 5vh;
+  width: 20vw;
 }
 
 .home-container {
@@ -24,4 +25,11 @@
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
+}
+
+.generateButtonHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

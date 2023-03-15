@@ -23,16 +23,19 @@ const Home = () => {
   const { exerciseNumber, setExerciseNumber } = useContext(
     ExerciseNumberContext
   );
+  const [workoutComplete, setWorkoutComplete] = useState(false);
 
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
   useEffect(() => {
     setExerciseNumber(3);
+    setWorkoutComplete(false);
   }, []);
 
   //! Need to make sure when you get rid of all options that it resets.
 
   async function callFetch() {
+    setWorkoutComplete(false);
     console.log("selected Muscles: ", selectedMuscles);
     console.log("selected Type: ", selectedType);
     if (selectedMuscles !== null && selectedMuscles !== undefined) {
@@ -48,16 +51,17 @@ const Home = () => {
 
         const results = await Promise.all(promises);
 
-        // results.map((array) => {
-        //   // let newArray = array.json1;
-        //   // const randomList = shuffleArray(newArray);
-        //   // console.log("random", randomList);
-        //   console.log(array);
-        // });
+        results.map((array) => {
+          let newArray = array.json1;
+          const randomList = shuffleArray(newArray);
+          console.log("random", randomList);
+          console.log(array);
+        });
 
         console.log("results", results);
 
         setWorkoutList(results);
+        setWorkoutComplete(true);
       } else {
         console.log("just workout");
         const promises = selectedMuscles.map((option) =>
@@ -75,6 +79,7 @@ const Home = () => {
         console.log("results", results);
 
         setWorkoutList(results);
+        setWorkoutComplete(true);
       }
     } else {
       console.log("just type");
@@ -87,6 +92,7 @@ const Home = () => {
       console.log("results", results);
 
       setWorkoutList([results]);
+      setWorkoutComplete(true);
     }
   }
 
@@ -122,53 +128,19 @@ const Home = () => {
     //! add try catch
   }
 
-  async function newFetch(muscle, type) {
-    const url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
-    setApiFlag("both");
-    console.log("both");
-
-    const response = await fetch(url, {
-      method: "GET",
-      withCredentials: true,
-      headers: { "X-Api-Key": apiKey },
-    });
-
-    const json1 = await response.json();
-
-    console.log("json1", json1);
-
-    // json1.map((array) => {
-    //   let newArray = array.json1;
-    //   const randomList = shuffleArray(newArray);
-    //   console.log("random", randomList);
-    // });
-
-    // setWorkoutList([json1]);
-
-    console.log("set Json already");
-
-    return json1;
-  }
-
   function shuffleArray(array) {
     let currentIndex = array.length,
       randomIndex;
 
-    // While there remain elements to shuffle.
-    //  &&
     while (currentIndex != 0) {
-      // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
 
-      // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex],
         array[currentIndex],
       ];
     }
-
-    // console.log("shuffle:", array);
 
     return array;
   }
@@ -214,12 +186,20 @@ const Home = () => {
             }}
           />
         </div>
-        <button className="buttonGenerate" onClick={callFetch}>
-          Generate Workout
-        </button>
-        <Link to="/workout">
-          <button>View Workout</button>
-        </Link>
+        <div className="generateButtonHolder">
+          <button className="buttonGenerate" onClick={callFetch}>
+            Generate Workout
+          </button>
+          {workoutComplete ? (
+            <Link to="/workout">
+              <button className="buttonGenerate buttonView">
+                View Workout
+              </button>
+            </Link>
+          ) : (
+            <div className="generateButtonHolder"></div>
+          )}
+        </div>
       </div>
     </div>
   );
