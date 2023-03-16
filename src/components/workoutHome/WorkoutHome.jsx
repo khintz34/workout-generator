@@ -81,134 +81,82 @@ const WorkoutHome = () => {
         <h2>Your Workout</h2>
         {workoutList.map((array, index) => {
           let num = 0;
+          let exerciseMap;
+
+          if (apiFlag === "muscle" || apiFlag === "both") {
+            exerciseMap = array.json1;
+          } else {
+            exerciseMap = array;
+          }
+
           return (
             <ul className="workout-list" key={`ul-workout-home-${index}`}>
               <div>
-                {/* //! this is not working. only load header if there is data in
-                the array or //! if exerciseNumber > 0 */}
-                {apiFlag === "muscle" ? (
-                  exerciseNumber !== 1 ? (
-                    workoutList[index].json1.length !== 0 ? (
-                      <h3>{capAll(workoutList[index].json1[index].muscle)}</h3>
-                    ) : (
-                      <h3>No Exercises added</h3>
-                    )
-                  ) : (
-                    <h3>{capAll(workoutList[index].json1[index].muscle)}</h3>
-                  )
+                {exerciseNumber === 0 || exerciseMap.length === 0 ? (
+                  <h3>No Exercises added</h3>
+                ) : apiFlag === "muscle" ? (
+                  <h3>{capAll(workoutList[index].json1[index].muscle)}</h3>
                 ) : apiFlag === "type" ? (
                   <h3>{capAll(workoutList[index][0].type)}</h3>
-                ) : workoutList[index].json1.length !== 0 ? (
+                ) : (
                   <h3>{`${capAll(workoutList[index].json1[0].type)}: ${capAll(
                     workoutList[index].json1[0].muscle
                   )}`}</h3>
-                ) : (
-                  <h3>No Exercises added</h3>
                 )}
               </div>
               <div className="exercise-list-container">
-                {apiFlag === "muscle" || apiFlag === "both"
-                  ? array.json1.map((value) => {
-                      num++;
-                      if (num > exerciseNumber) {
-                        return;
-                      }
-                      return (
-                        <div
-                          className="exercise-list-main"
-                          key={`${value.name}-${index}-div`}
+                {exerciseMap.map((value) => {
+                  num++;
+                  if (num > exerciseNumber) {
+                    return;
+                  }
+                  return (
+                    <div
+                      className="exercise-list-main"
+                      key={`${value.name}-${index}-div`}
+                    >
+                      <Link
+                        to={`/workoutDetail/${value.name}`}
+                        state={{ value: value }}
+                        onClick={() => {
+                          setCurrentWorkout(value);
+                        }}
+                        className="exercise-link"
+                      >
+                        <li
+                          className="workoutList-li"
+                          key={`${value.name}-${index}`}
                         >
+                          {value.name}
+                        </li>
+                      </Link>
+                      <div className="exerciseButtonContainer">
+                        <button>
                           <Link
                             to={`/workoutDetail/${value.name}`}
                             state={{ value: value }}
                             onClick={() => {
                               setCurrentWorkout(value);
                             }}
-                            className="exercise-link"
+                            className="infoBtn"
                           >
-                            <li
-                              className="workoutList-li"
-                              key={`${value.name}-${index}`}
-                            >
-                              {value.name}
-                            </li>
+                            <FontAwesomeIcon icon={faCircleInfo} />
                           </Link>
-                          <div className="exerciseButtonContainer">
-                            <button>
-                              <Link
-                                to={`/workoutDetail/${value.name}`}
-                                state={{ value: value }}
-                                onClick={() => {
-                                  setCurrentWorkout(value);
-                                }}
-                                className="infoBtn"
-                              >
-                                <FontAwesomeIcon icon={faCircleInfo} />
-                              </Link>
-                            </button>
-                            <button
-                              onClick={() => removeExercise(value.name, true)}
-                            >
-                              <FontAwesomeIcon icon={faRotate} />
-                            </button>
-                            <button
-                              onClick={() => removeExercise(value.name, false)}
-                            >
-                              <FontAwesomeIcon icon={faTrash} />
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })
-                  : array.map((value, index) => {
-                      num++;
-                      if (num > exerciseNumber) {
-                        return;
-                      }
-                      return (
-                        <div
-                          className="exercise-list-main"
-                          key={`${value.name}-${index}-div`}
+                        </button>
+                        <button
+                          onClick={() => removeExercise(value.name, true)}
                         >
-                          <Link
-                            key={`${value.name}-${index}-Link`}
-                            to={`/workoutDetail/${value.name}`}
-                            state={{ value: value }}
-                            onClick={() => {
-                              setCurrentWorkout(value);
-                            }}
-                          >
-                            <li
-                              className="workoutList-li"
-                              key={`${value.name}-${index}`}
-                            >
-                              {value.name}
-                            </li>
-                          </Link>
-                          <button>
-                            <Link
-                              to={`/workoutDetail/${value.name}`}
-                              state={{ value: value }}
-                              onClick={() => {
-                                setCurrentWorkout(value);
-                              }}
-                            >
-                              Info
-                            </Link>
-                          </button>
-                          <button
-                            onClick={() => removeExercise(value.name, true)}
-                          >
-                            Change
-                          </button>
-                          <button
-                            onClick={() => removeExercise(value.name, false)}
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      );
-                    })}
+                          <FontAwesomeIcon icon={faRotate} />
+                        </button>
+                        <button
+                          onClick={() => removeExercise(value.name, false)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </ul>
           );
