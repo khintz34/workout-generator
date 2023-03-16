@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/workout-generator/">
         <WorkoutListContext.Provider value={{ workoutList, setWorkoutList }}>
           <ApiFlag.Provider value={{ apiFlag, setApiFlag }}>
             <CurrentWorkoutContext.Provider
