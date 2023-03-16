@@ -29,7 +29,14 @@ const Options = () => {
           You may one or more from the following muscle groups:
           <ul>
             {MuscleGroup.map((value) => {
-              return <li className="optionList-li">{capAll(value.value)}</li>;
+              return (
+                <li
+                  className="optionList-li"
+                  key={`${value.value}-muscle-option-li`}
+                >
+                  {capAll(value.value)}
+                </li>
+              );
             })}
           </ul>
         </div>
@@ -37,7 +44,14 @@ const Options = () => {
           You may pick one from the following workout types:
           <ul>
             {WorkoutType.map((value) => {
-              return <li className="optionList-li">{capAll(value.value)}</li>;
+              return (
+                <li
+                  className="optionList-li"
+                  key={`${value.value}-type-option-li`}
+                >
+                  {capAll(value.value)}
+                </li>
+              );
             })}
           </ul>
         </div>
