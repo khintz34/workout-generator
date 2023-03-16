@@ -11,23 +11,70 @@ import {
   WorkoutListContext,
 } from "../../contexts/workoutList";
 
-const Options = () => {
-  const [muscleStatus, setMuscleStatus] = useState(false);
-  const [typeStatus, setTypeStatus] = useState(false);
-  const [selectedMuscles, setSelectedMuscles] = useState(null);
-  const [selectedType, setSelectedType] = useState(null);
-  const [urlEnding, setUrlEnding] = useState(null);
-  const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
-  const { apiFlag, setApiFlag } = useContext(ApiFlag);
-  const [array, setArray] = useState([]);
-  const { exerciseNumber, setExerciseNumber } = useContext(
-    ExerciseNumberContext
-  );
+import { capAll } from "../../assets/utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faRotate,
+  faCircleInfo,
+} from "@fortawesome/free-solid-svg-icons";
 
+const Options = () => {
   return (
     <div className="options-container">
       <Header />
-      <div className="options-main">Options</div>
+      <div className="options-main">
+        <h3>Options</h3>
+        <div>
+          You may one or more from the following muscle groups:
+          <ul>
+            {MuscleGroup.map((value) => {
+              return <li className="optionList-li">{capAll(value.value)}</li>;
+            })}
+          </ul>
+        </div>
+        <div>
+          You may pick one from the following workout types:
+          <ul>
+            {WorkoutType.map((value) => {
+              return <li className="optionList-li">{capAll(value.value)}</li>;
+            })}
+          </ul>
+        </div>
+        <div className="option-info">
+          You may choose how many workouts per muscle group/type you would like
+          to have in your workout (1 - 10). If less than your desired number
+          show up, then that means you reached the max amount from the database.
+        </div>
+        <div className="option-info">
+          Tap the
+          <span>
+            {" "}
+            <FontAwesomeIcon
+              icon={faCircleInfo}
+              className="optionPurple"
+            />{" "}
+          </span>
+          icon for a detailed explanation of the exercise, including difficulty,
+          needed eqipment, and instructions.
+        </div>
+        <div className="option-info">
+          Tap the
+          <span>
+            {" "}
+            <FontAwesomeIcon icon={faRotate} className="optionPurple" />{" "}
+          </span>
+          icon to replace that excerise with a different one.
+        </div>
+        <div className="option-info">
+          Tap the
+          <span>
+            {" "}
+            <FontAwesomeIcon icon={faTrash} className="optionPurple" />{" "}
+          </span>
+          to remove that exercise have one less exercise in your workout.
+        </div>
+      </div>
     </div>
   );
 };

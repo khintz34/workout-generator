@@ -47,3 +47,7 @@ div > h3::first-letter {
 .infoBtn {
   color: white;
 }
+
+.exerciseHeader {
+  padding-left: 2vw;
+}

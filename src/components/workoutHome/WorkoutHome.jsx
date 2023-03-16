@@ -15,6 +15,7 @@ import {
   faRotate,
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
+import { capAll } from "../../assets/utils";
 
 const WorkoutHome = () => {
   const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
@@ -32,14 +33,6 @@ const WorkoutHome = () => {
     console.log(workoutList[0].json1);
     console.log(exerciseNumber);
   }, [workoutList]);
-
-  const capAll = (string) => {
-    return string
-      .split("_")
-      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-      .join("_")
-      .replace(/_/g, " ");
-  };
 
   const removeExercise = (name, change) => {
     let newArray = workoutList;
@@ -91,7 +84,7 @@ const WorkoutHome = () => {
 
           return (
             <ul className="workout-list" key={`ul-workout-home-${index}`}>
-              <div>
+              <div className="exerciseHeader">
                 {exerciseNumber === 0 || exerciseMap.length === 0 ? (
                   <h3>No Exercises added</h3>
                 ) : apiFlag === "muscle" ? (

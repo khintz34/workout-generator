@@ -7,3 +7,16 @@
   align-items: center;
   width: 100vw;
 }
+
+.optionList-li {
+  text-align: left;
+  list-style-type: circle;
+}
+
+.option-info {
+  margin-bottom: 2vh;
+}
+
+.optionPurple {
+  color: rebeccapurple;
+}
