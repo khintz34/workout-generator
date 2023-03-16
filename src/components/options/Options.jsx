@@ -55,12 +55,12 @@ const Options = () => {
             })}
           </ul>
         </div>
-        <div className="option-info">
+        <p className="option-info">
           You may choose how many workouts per muscle group/type you would like
           to have in your workout (1 - 10). If less than your desired number
           show up, then that means you reached the max amount from the database.
-        </div>
-        <div className="option-info">
+        </p>
+        <p className="option-info">
           Tap the
           <span>
             {" "}
@@ -71,23 +71,27 @@ const Options = () => {
           </span>
           icon for a detailed explanation of the exercise, including difficulty,
           needed eqipment, and instructions.
-        </div>
-        <div className="option-info">
+        </p>
+        <p className="option-info">
           Tap the
           <span>
             {" "}
             <FontAwesomeIcon icon={faRotate} className="optionPurple" />{" "}
           </span>
           icon to replace that excerise with a different one.
-        </div>
-        <div className="option-info">
+        </p>
+        <p className="option-info">
           Tap the
           <span>
             {" "}
             <FontAwesomeIcon icon={faTrash} className="optionPurple" />{" "}
           </span>
           to remove that exercise have one less exercise in your workout.
-        </div>
+        </p>
+        <p className="option-info">
+          This workout generator is created using the Exercise API from{" "}
+          <a href="https://api-ninjas.com/api/exercises">API Ninjas</a>.
+        </p>
       </div>
     </div>
   );

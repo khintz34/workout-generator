@@ -1,6 +1,6 @@
 import "./App.css";
 import Home from "./components/home/Home";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import WorkoutHome from "./components/workoutHome/WorkoutHome";
 import { useState } from "react";
 import {
@@ -10,7 +10,6 @@ import {
   WorkoutListContext,
 } from "./contexts/workoutList";
 import WorkoutDetail from "./components/workoutDetail/WorkoutDetail";
-import About from "./components/about/About";
 import Options from "./components/options/Options";
 
 function App() {
@@ -21,7 +20,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <WorkoutListContext.Provider value={{ workoutList, setWorkoutList }}>
           <ApiFlag.Provider value={{ apiFlag, setApiFlag }}>
             <CurrentWorkoutContext.Provider
@@ -32,7 +31,6 @@ function App() {
               >
                 <Routes>
                   <Route path="/" element={<Home />}></Route>
-                  <Route path="/about" element={<About />}></Route>
                   <Route path="/options" element={<Options />}></Route>
                   <Route
                     path="/workout"
@@ -48,7 +46,7 @@ function App() {
             </CurrentWorkoutContext.Provider>
           </ApiFlag.Provider>
         </WorkoutListContext.Provider>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }

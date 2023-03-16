@@ -63,12 +63,6 @@ const Header = () => {
               Options{" "}
             </li>
           </Link>
-
-          <Link className="whiteFont " to="/about">
-            <li className="header-btn menuItem" onClick={closeMenu}>
-              About
-            </li>
-          </Link>
         </ul>
       </div>
     </div>

@@ -3,20 +3,13 @@ import { ApiFlag, WorkoutListContext } from "../../contexts/workoutList";
 import Header from "../header/Header";
 import "./WorkoutDetail.css";
 import { Link, useLocation } from "react-router-dom";
+import { capAll } from "../../assets/utils";
 
 const WorkoutDetail = (props) => {
   const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
   const { apiFlag, setApiFlag } = useContext(ApiFlag);
   const location = useLocation();
   const { value } = location.state;
-
-  const capAll = (string) => {
-    return string
-      .split("_")
-      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-      .join("_")
-      .replace(/_/g, " ");
-  };
 
   return (
     <div>
