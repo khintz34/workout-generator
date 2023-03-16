@@ -11,6 +11,7 @@ import {
 } from "./contexts/workoutList";
 import WorkoutDetail from "./components/workoutDetail/WorkoutDetail";
 import Options from "./components/options/Options";
+import Header from "./components/header/Header";
 
 function App() {
   const [workoutList, setWorkoutList] = useState([]);
