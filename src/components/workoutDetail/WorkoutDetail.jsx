@@ -39,7 +39,7 @@ const WorkoutDetail = (props) => {
           <span className="detail-span">Instructions: </span>
           {capAll(value.instructions)}
         </p>
-        <Link to="/workout" className="backBtn">
+        <Link to="/workout-generator/workout" className="backBtn">
           <button className="backBtn">Back</button>
         </Link>
       </div>
