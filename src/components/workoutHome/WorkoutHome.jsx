@@ -111,7 +111,7 @@ const WorkoutHome = () => {
                         key={`${value.name}-${index}-div`}
                       >
                         <Link
-                          to={`/workoutDetail/${value.name}`}
+                          to={`/workout-generator/workoutDetail/${value.name}`}
                           state={{ value: value }}
                           onClick={() => {
                             setCurrentWorkout(value);
@@ -128,7 +128,7 @@ const WorkoutHome = () => {
                         <div className="exerciseButtonContainer">
                           <button>
                             <Link
-                              to={`/workoutDetail/${value.name}`}
+                              to={`/workout-generator/workoutDetail/${value.name}`}
                               state={{ value: value }}
                               onClick={() => {
                                 setCurrentWorkout(value);
