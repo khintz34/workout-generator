@@ -140,11 +140,13 @@ const WorkoutHome = () => {
                           </button>
                           <button
                             onClick={() => removeExercise(value.name, true)}
+                            className="infoBtn"
                           >
                             <FontAwesomeIcon icon={faRotate} />
                           </button>
                           <button
                             onClick={() => removeExercise(value.name, false)}
+                            className="infoBtn"
                           >
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
