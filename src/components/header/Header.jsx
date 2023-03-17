@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <div className="header flex-c-c">
       <div>
-        <Link to="/workout-generator/" className="whiteLink">
+        <Link to="/" className="whiteLink">
           <h1 className="vh-font-3">Workout Generator</h1>
         </Link>
       </div>
@@ -48,17 +48,17 @@ const Header = () => {
             navbarStatus === true ? " showMenu" : " hideNav"
           }`}
         >
-          <Link to={"/workout-generator/"} className=" whiteFont">
+          <Link to={"/"} className=" whiteFont">
             <li className="header-btn menuItem" onClick={closeMenu}>
               Home
             </li>
           </Link>
-          <Link to={"/workout-generator/workout"} className=" whiteFont">
+          <Link to={"/workout"} className=" whiteFont">
             <li className="header-btn menuItem" onClick={closeMenu}>
               My Workout
             </li>
           </Link>
-          <Link className=" whiteFont" to="/workout-generator/options">
+          <Link className=" whiteFont" to="/options">
             <li className="header-btn menuItem" onClick={closeMenu}>
               Options{" "}
             </li>

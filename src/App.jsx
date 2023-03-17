@@ -31,18 +31,15 @@ function App() {
                 value={{ exerciseNumber, setExerciseNumber }}
               >
                 <Routes>
-                  <Route path="/workout-generator/" element={<Home />}></Route>
+                  <Route path="/" element={<Home />}></Route>
+                  <Route path="/options" element={<Options />}></Route>
                   <Route
-                    path="workout-generator/options"
-                    element={<Options />}
-                  ></Route>
-                  <Route
-                    path="workout-generator/workout"
+                    path="/workout"
                     element={<WorkoutHome />}
                     name={currentWorkout}
                   ></Route>
                   <Route
-                    path="workout-generator/workoutDetail/:workout"
+                    path="workoutDetail/:workout"
                     element={<WorkoutDetail />}
                   ></Route>
                 </Routes>

@@ -203,7 +203,7 @@ const Home = () => {
             Generate Workout
           </button>
           {workoutComplete ? (
-            <Link to="/workout-generator/workout">
+            <Link to="/workout">
               <button className="buttonGenerate buttonView">
                 View Workout
               </button>
