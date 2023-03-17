@@ -7,6 +7,7 @@
   top: 0;
   z-index: 2;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .vh-font-3 {

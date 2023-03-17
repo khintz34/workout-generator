@@ -1,10 +1,12 @@
 .buttonGenerate {
   margin-top: 5vh;
   width: 50vw;
+  color: white;
 }
 
 .home-container {
   width: 100vw;
+  height: 90vh;
 }
 
 .question-container {
