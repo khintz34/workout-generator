@@ -22,7 +22,6 @@ import {
 const Options = () => {
   return (
     <div className="options-container">
-      <Header />
       <div className="options-main">
         <h3>Options</h3>
         <div>

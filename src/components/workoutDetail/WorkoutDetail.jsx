@@ -13,7 +13,6 @@ const WorkoutDetail = (props) => {
 
   return (
     <div>
-      <Header />
       <div className="workoutList-detail">
         <h2>
           <span className="detail-span">Exercise: </span>

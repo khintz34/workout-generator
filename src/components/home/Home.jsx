@@ -158,7 +158,6 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <Header />
       <div className="home-main">
         <p>Choose Muscle Group(s) and/or Workout Type</p>
         <div className="question-container">

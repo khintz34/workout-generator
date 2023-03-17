@@ -6,7 +6,6 @@ import {
   ExerciseNumberContext,
   WorkoutListContext,
 } from "../../contexts/workoutList";
-import Header from "../header/Header";
 import "./WorkoutHome.css";
 import WorkoutDetail from "../workoutDetail/WorkoutDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -68,7 +67,6 @@ const WorkoutHome = () => {
 
   return (
     <div>
-      <Header />
       <div className="workoutList-main">
         <h2>Your Workout</h2>
         {workoutList.length == 0 ? (

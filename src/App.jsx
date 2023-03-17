@@ -22,6 +22,7 @@ function App() {
   return (
     <div className="App">
       <HashRouter>
+        <Header />
         <WorkoutListContext.Provider value={{ workoutList, setWorkoutList }}>
           <ApiFlag.Provider value={{ apiFlag, setApiFlag }}>
             <CurrentWorkoutContext.Provider
