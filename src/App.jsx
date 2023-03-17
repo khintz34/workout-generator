@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter basename="/workout-generator/">
+      <HashRouter>
         <WorkoutListContext.Provider value={{ workoutList, setWorkoutList }}>
           <ApiFlag.Provider value={{ apiFlag, setApiFlag }}>
             <CurrentWorkoutContext.Provider
@@ -47,7 +47,7 @@ function App() {
             </CurrentWorkoutContext.Provider>
           </ApiFlag.Provider>
         </WorkoutListContext.Provider>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
