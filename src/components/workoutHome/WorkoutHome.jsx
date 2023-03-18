@@ -25,44 +25,25 @@ const WorkoutHome = () => {
   const { exerciseNumber, setExerciseNumber } = useContext(
     ExerciseNumberContext
   );
-  const [emptyList, setEmptyList] = useState(false);
 
   useEffect(() => {
     console.log("workoutList", workoutList);
-    console.log(exerciseNumber);
   }, [workoutList]);
 
-  const removeExercise = (name, change) => {
+  const removeExercise = (name, change, num) => {
     let newArray = workoutList;
 
-    if (apiFlag === "muscle" || apiFlag === "both") {
-      newArray[0].json1.map((value, index) => {
-        console.log(value);
-        if (value.name === name) {
-          newArray[0].json1.splice(index, 1);
-          console.log(newArray[0].json1);
-          if (!change) {
-            setExerciseNumber(exerciseNumber - 1);
-          } else {
-            newArray[0].json1.push(value);
-          }
+    newArray[num].json1.map((value, index) => {
+      if (value.name === name) {
+        newArray[num].json1.splice(index, 1);
+        if (!change) {
+          newArray[num].number = newArray[num].number - 1;
+        } else {
+          newArray[num].json1.push(value);
         }
-        setWorkoutList([...newArray]);
-      });
-    } else {
-      newArray[0].map((value, index) => {
-        console.log(value);
-        if (value.name === name) {
-          newArray[0].splice(index, 1);
-          if (!change) {
-            setExerciseNumber(exerciseNumber - 1);
-          } else {
-            newArray[0].push(value);
-          }
-        }
-        setWorkoutList([...newArray]);
-      });
-    }
+      }
+      setWorkoutList([...newArray]);
+    });
   };
 
   return (
@@ -74,23 +55,18 @@ const WorkoutHome = () => {
         ) : (
           workoutList.map((array, index) => {
             let num = 0;
-            let exerciseMap;
-
-            if (apiFlag === "muscle" || apiFlag === "both") {
-              exerciseMap = array.json1;
-            } else {
-              exerciseMap = array;
-            }
+            let exerciseMap = array.json1;
 
             return (
               <ul className="workout-list" key={`ul-workout-home-${index}`}>
                 <div className="exerciseHeader">
-                  {exerciseNumber === 0 || exerciseMap.length === 0 ? (
+                  {exerciseMap.length === 0 ||
+                  workoutList[index].number === 0 ? (
                     <h3>No Exercises added</h3>
                   ) : apiFlag === "muscle" ? (
                     <h3>{capAll(workoutList[index].json1[index].muscle)}</h3>
                   ) : apiFlag === "type" ? (
-                    <h3>{capAll(workoutList[index][0].type)}</h3>
+                    <h3>{capAll(workoutList[index].json1[0].type)}</h3>
                   ) : (
                     <h3>{`${capAll(workoutList[index].json1[0].type)}: ${capAll(
                       workoutList[index].json1[0].muscle
@@ -100,7 +76,7 @@ const WorkoutHome = () => {
                 <div className="exercise-list-container">
                   {exerciseMap.map((value) => {
                     num++;
-                    if (num > exerciseNumber) {
+                    if (num > workoutList[index].number) {
                       return;
                     }
                     return (
@@ -137,13 +113,17 @@ const WorkoutHome = () => {
                             </Link>
                           </button>
                           <button
-                            onClick={() => removeExercise(value.name, true)}
+                            onClick={() =>
+                              removeExercise(value.name, true, index)
+                            }
                             className="infoBtn"
                           >
                             <FontAwesomeIcon icon={faRotate} />
                           </button>
                           <button
-                            onClick={() => removeExercise(value.name, false)}
+                            onClick={() =>
+                              removeExercise(value.name, false, index)
+                            }
                             className="infoBtn"
                           >
                             <FontAwesomeIcon icon={faTrash} />

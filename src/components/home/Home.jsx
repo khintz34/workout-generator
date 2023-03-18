@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MuscleGroup, WorkoutType } from "../../assets/choices";
-import Choice from "../choices/Choice";
 import Dropdown from "../dropdown/Dropdown";
-import Header from "../header/Header";
 import "./home.css";
 import { Link } from "react-router-dom";
 import {
@@ -12,14 +10,10 @@ import {
 } from "../../contexts/workoutList";
 
 const Home = () => {
-  const [muscleStatus, setMuscleStatus] = useState(false);
-  const [typeStatus, setTypeStatus] = useState(false);
   const [selectedMuscles, setSelectedMuscles] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
-  const [urlEnding, setUrlEnding] = useState(null);
   const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
   const { apiFlag, setApiFlag } = useContext(ApiFlag);
-  const [array, setArray] = useState([]);
   const { exerciseNumber, setExerciseNumber } = useContext(
     ExerciseNumberContext
   );
@@ -31,8 +25,6 @@ const Home = () => {
     setExerciseNumber(3);
     setWorkoutComplete(false);
   }, []);
-
-  //! Need to make sure when you get rid of all options that it resets.
 
   async function callFetch() {
     setWorkoutComplete(false);
@@ -93,11 +85,13 @@ const Home = () => {
 
       let results = await Promise.resolve(promises);
 
+      let number = results.number;
+
       results = shuffleArray(results.json1);
 
       console.log("results", results);
 
-      setWorkoutList([results]);
+      setWorkoutList([{ json1: results, number: number }]);
     }
   }
 
@@ -134,7 +128,7 @@ const Home = () => {
 
     setWorkoutComplete(true);
 
-    return { json1 };
+    return { json1, number: exerciseNumber };
 
     //! add try catch
   }
