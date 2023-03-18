@@ -21,9 +21,7 @@ const WorkoutHome = () => {
     CurrentWorkoutContext
   );
 
-  useEffect(() => {
-    console.log("workoutList", workoutList);
-  }, [workoutList]);
+  useEffect(() => {}, [workoutList]);
 
   const removeExercise = (name, change, num) => {
     let newArray = workoutList;

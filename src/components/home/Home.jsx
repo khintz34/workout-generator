@@ -28,18 +28,12 @@ const Home = () => {
 
   async function callFetch() {
     setWorkoutComplete(false);
-    console.log("selected Muscles: ", selectedMuscles);
-    console.log("selected Type: ", selectedType);
     if (
       selectedMuscles !== null &&
       selectedMuscles !== undefined &&
       selectedMuscles.length > 0
     ) {
       if (selectedType !== null && selectedType !== undefined) {
-        console.log("workout and type");
-        console.log(selectedMuscles);
-        console.log(selectedType);
-
         const promises = selectedMuscles.map(async (option) => {
           const data = await fetchData(option.value, selectedType.value);
           return data;
@@ -50,15 +44,10 @@ const Home = () => {
         results.map((array) => {
           let newArray = array.json1;
           const randomList = shuffleArray(newArray);
-          console.log("random", randomList);
-          console.log(array);
         });
-
-        console.log("results", results);
 
         setWorkoutList(results);
       } else {
-        console.log("just workout");
         const promises = selectedMuscles.map((option) =>
           fetchData(option.value, null)
         );
@@ -68,17 +57,12 @@ const Home = () => {
         results.map((array) => {
           let newArray = array.json1;
           const randomList = shuffleArray(newArray);
-          // console.log("random", randomList);
         });
-
-        console.log("results", results);
 
         setWorkoutList(results);
       }
     } else {
-      console.log("just type");
       if (selectedType === null || selectedType === undefined) {
-        console.log("ERROR NO DATA");
         return;
       }
       const promises = fetchData(null, selectedType.value);
@@ -89,14 +73,11 @@ const Home = () => {
 
       results = shuffleArray(results.json1);
 
-      console.log("results", results);
-
       setWorkoutList([{ json1: results, number: number }]);
     }
   }
 
   async function fetchData(muscle, type) {
-    console.log("fetching data");
     let url;
     if (
       selectedMuscles !== null &&
@@ -106,7 +87,6 @@ const Home = () => {
       if (selectedType !== null && selectedType !== undefined) {
         url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
         setApiFlag("both");
-        console.log("both");
       } else {
         url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`;
         setApiFlag("muscle");
@@ -123,8 +103,6 @@ const Home = () => {
     });
 
     const json1 = await response.json();
-
-    console.log("json1", json1);
 
     setWorkoutComplete(true);
 
