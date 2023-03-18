@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 import {
   ApiFlag,
   CurrentWorkoutContext,
-  ExerciseNumberContext,
   WorkoutListContext,
 } from "../../contexts/workoutList";
 import "./WorkoutHome.css";
-import WorkoutDetail from "../workoutDetail/WorkoutDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
@@ -22,9 +20,6 @@ const WorkoutHome = () => {
   const { currentWorkout, setCurrentWorkout } = useContext(
     CurrentWorkoutContext
   );
-  const { exerciseNumber, setExerciseNumber } = useContext(
-    ExerciseNumberContext
-  );
 
   useEffect(() => {
     console.log("workoutList", workoutList);
@@ -38,6 +33,9 @@ const WorkoutHome = () => {
         newArray[num].json1.splice(index, 1);
         if (!change) {
           newArray[num].number = newArray[num].number - 1;
+          if (newArray[num].number === 0) {
+            newArray.splice(num, 1);
+          }
         } else {
           newArray[num].json1.push(value);
         }
@@ -62,7 +60,11 @@ const WorkoutHome = () => {
                 <div className="exerciseHeader">
                   {exerciseMap.length === 0 ||
                   workoutList[index].number === 0 ? (
-                    <h3>No Exercises added</h3>
+                    workoutList.length > 1 ? (
+                      <></>
+                    ) : (
+                      <h3>No Exercises added</h3>
+                    )
                   ) : apiFlag === "muscle" ? (
                     <h3>{capAll(workoutList[index].json1[index].muscle)}</h3>
                   ) : apiFlag === "type" ? (
@@ -74,7 +76,7 @@ const WorkoutHome = () => {
                   )}
                 </div>
                 <div className="exercise-list-container">
-                  {exerciseMap.map((value) => {
+                  {exerciseMap.map((value, index2) => {
                     num++;
                     if (num > workoutList[index].number) {
                       return;
@@ -82,23 +84,14 @@ const WorkoutHome = () => {
                     return (
                       <div
                         className="exercise-list-main"
-                        key={`${value.name}-${index}-div`}
+                        key={`${value.name}-${index2}-div`}
                       >
-                        <Link
-                          to={`/workoutDetail/${value.name}`}
-                          state={{ value: value }}
-                          onClick={() => {
-                            setCurrentWorkout(value);
-                          }}
-                          className="exercise-link"
+                        <li
+                          className="workoutList-li"
+                          key={`${value.name}-${index}`}
                         >
-                          <li
-                            className="workoutList-li"
-                            key={`${value.name}-${index}`}
-                          >
-                            {value.name}
-                          </li>
-                        </Link>
+                          {value.name}
+                        </li>
                         <div className="exerciseButtonContainer">
                           <button>
                             <Link

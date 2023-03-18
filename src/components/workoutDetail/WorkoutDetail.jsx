@@ -6,8 +6,6 @@ import { Link, useLocation } from "react-router-dom";
 import { capAll } from "../../assets/utils";
 
 const WorkoutDetail = (props) => {
-  const { workoutList, setWorkoutList } = useContext(WorkoutListContext);
-  const { apiFlag, setApiFlag } = useContext(ApiFlag);
   const location = useLocation();
   const { value } = location.state;
 
