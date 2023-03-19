@@ -18,6 +18,7 @@ const Home = () => {
     ExerciseNumberContext
   );
   const [workoutComplete, setWorkoutComplete] = useState(false);
+  const [loadMessage, setLoadMessage] = useState("");
 
   const apiKey = "YL6YrzyOHKR2uAUyAxRw3g==P8Wgnch0sp4c4ted";
 
@@ -48,6 +49,7 @@ const Home = () => {
 
         setWorkoutList(results);
       } else {
+        setLoadMessage("Workout Loading");
         const promises = selectedMuscles.map((option) =>
           fetchData(option.value, null)
         );
@@ -60,6 +62,7 @@ const Home = () => {
         });
 
         setWorkoutList(results);
+        setLoadMessage("");
       }
     } else {
       if (selectedType === null || selectedType === undefined) {
@@ -78,37 +81,39 @@ const Home = () => {
   }
 
   async function fetchData(muscle, type) {
-    let url;
-    if (
-      selectedMuscles !== null &&
-      selectedMuscles !== undefined &&
-      selectedMuscles.length > 0
-    ) {
-      if (selectedType !== null && selectedType !== undefined) {
-        url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
-        setApiFlag("both");
+    try {
+      let url;
+      if (
+        selectedMuscles !== null &&
+        selectedMuscles !== undefined &&
+        selectedMuscles.length > 0
+      ) {
+        if (selectedType !== null && selectedType !== undefined) {
+          url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}&type=${type}`;
+          setApiFlag("both");
+        } else {
+          url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`;
+          setApiFlag("muscle");
+        }
       } else {
-        url = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`;
-        setApiFlag("muscle");
+        url = `https://api.api-ninjas.com/v1/exercises?type=${type}`;
+        setApiFlag("type");
       }
-    } else {
-      url = `https://api.api-ninjas.com/v1/exercises?type=${type}`;
-      setApiFlag("type");
+
+      const response = await fetch(url, {
+        method: "GET",
+        withCredentials: true,
+        headers: { "X-Api-Key": apiKey },
+      });
+
+      const json1 = await response.json();
+
+      setWorkoutComplete(true);
+
+      return { json1, number: exerciseNumber };
+    } catch {
+      alert("ERROR - WORKOUT FAILED. PLEASE TRY AGAIN");
     }
-
-    const response = await fetch(url, {
-      method: "GET",
-      withCredentials: true,
-      headers: { "X-Api-Key": apiKey },
-    });
-
-    const json1 = await response.json();
-
-    setWorkoutComplete(true);
-
-    return { json1, number: exerciseNumber };
-
-    //! add try catch
   }
 
   function shuffleArray(array) {
@@ -180,7 +185,9 @@ const Home = () => {
               </button>
             </Link>
           ) : (
-            <div className="generateButtonHolder"></div>
+            <>
+              <div className="loadMessage">{loadMessage}</div>
+            </>
           )}
         </div>
       </div>

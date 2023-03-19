@@ -53,6 +53,7 @@
   border-radius: 2px;
   display: flex;
   align-items: center;
+  color: black;
 }
 .dropdown-tag-close {
   display: flex;
